@@ -12,8 +12,11 @@ def index():
 def recommend():
     """Handle mood submission and display recommendations."""
     mood = request.form.get('mood')
+    if mood is None:
+        return render_template('recommendations.html', mood='unknown', recommendations={"error": "No mood selected."})
     recommendations = get_movies_by_mood(mood)
     return render_template('recommendations.html', mood=mood, recommendations=recommendations)
 
 if __name__ == '__main__':
+    print("Starting Flask app...")
     app.run(debug=True)
